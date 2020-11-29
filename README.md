@@ -1,10 +1,14 @@
 # Description
 
-Format the text like bold, italic, strike, and more by applying HTML tags and detect links in the text and convert them to HTML `<a>` tags.
+Detect the user-defined identifiers in the text and convert them into HTML tags like bold, italic, strike, and many more having XSS (Cross-site scripting) security with escaping functionality, also detect the links like URLs, email, and IP addresses and wrap them into Anchor tag `<a>`.
 
-# Demo
+# Online Demo
 
-<a href="https://stackblitz.com/edit/angular-ivy-v54dbf?file=src%2Fapp%2Fapp.component.ts" target='_blank'>CLICK HERE</a>
+<a href="https://stackblitz.com/edit/angular-ivy-sm7jjb?file=src%2Fapp%2Fcustom-pipe.pipe.ts" target='_blank'>CLICK HERE</a>
+
+# Supported browsers
+
+Fully supported and tested, over Google Chrome, Microsoft Edge, Mozilla Firefox and Internet Explorer 11.
 
 # Installation
 
@@ -29,11 +33,12 @@ var myText = "Once upon a time, there was a *thristy* ~_crow_~."
 In the array, the tag symbols in the first index and their identifier in the second index.
 
 ```js
-var tagArray = [['b','*'],['i','_'],['strike','~']];
+var tagArray = [['b','*'],['i','_'],['strike','~'],["mark","!"]];
 ```
 
- * Here symbol, 'b' is using for 'bold', 'i' for 'italic' and 'strike' for 'strike' tag.
+ * Here symbol, 'b' is using for 'bold', 'i' for 'italic', 'strike' for 'strike' and 'mark' for 'mark' tag with their respective Identifiers.
  * The user can use as many tags and their identifiers of his own choice.
+ * Some special characters can't be used as identifiers for example, dollar sign '$'.
  * Now the function will look like.
 
 ```js
@@ -55,7 +60,7 @@ var tagArray = [['b','*'],['i','_'],['strike','~']];
 Once upon a time, there was a <b>thristy</b> <strike><i>crow</i></strike>.
 
 
-# Auto detect links in text
+# Auto detect links in the text
 
 For auto detecting links in to the text and converting them to HTML `<a>` tags, the function 'ibsFormat' needs three arguments
  * To enable auto detecting links create an object and set its 'detectLinks' property to true.
@@ -67,7 +72,7 @@ For auto detecting links in to the text and converting them to HTML `<a>` tags, 
  ```js
  var myText = "The *best* website for learning _JS_ is https://www.w3schools.com/ and my email is info@myemail.com."
 
- var tagArray = [['b','*'],['i','_'],['strike','~']];
+ var tagArray = [['b','*'],['i','_'],['strike','~'],["mark","!"]];
 
  var obj = {detectLinks: true, target: '_blank'};
 
@@ -90,11 +95,25 @@ and my email is <a href='mailto:info@myemail.com' target='_blank'>info@myemail.c
 ### In order to skip the text formatting set the second argument null, like:
 
 ```js
-myText = ibsFormat(myText, null , obj);
+myText = ibsFormat(myText, null, obj);
+```
+
+# Cross Site Scripting (XSS).
+
+XSS attacks enable attackers to inject client-side scripts into web pages viewed by other users. In order to prevent those scripts, the
+client side tags are converted into nonexecutable through escaping. These security checks are enabled by default and it is recommended to
+keep them enabled, but in order to bypass these security checks place a forth argument in the function. 
+
+### In order to skip the XSS security checking:
+
+Place a JSON object in the forth argument and set it's value to false, if the forth argument is missing then it's value will be true by default. 
+
+```js
+myText = ibsFormat(myText, tagArray, obj, { allowXssEscaping : false });
 ```
 
 
-## Format the text at run time.
+# Format the text at run time.
 
 In order to format the text at run time in HTML, create a custom pipe and use the function there.
 
@@ -108,7 +127,7 @@ import { ibsFormat } from "ibs-format";
 export class ibsformatPipe implements PipeTransform {
   transform(value: any, args?: any): any {
     
-    value = ibsFormat(value, [["b", "*"], ["i", "_"], ["strike", "~"]],{ detectLinks: true, target: "_blank" });
+    value = ibsFormat(value, [["b", "*"], ["i", "_"], ["strike", "~"],["mark","!"]],{ detectLinks: true, target: "_blank" });
 
     return value;
   }
@@ -132,11 +151,11 @@ import { ibsformatPipe } from './custom-pipe.pipe';
 
 For full example of custom pipe, see the live demo mention above.
 
-
+### Feel free to report any bugs.
 
 # Precautions
 
 * Don't change the index positioning.
 * The function does not supports double or multiple identifiers rather than double asterisks '**'.
 * Don't use same identifiers for multiple tags.
-
+* Some special characters can't be used as identifiers for example, dollar sign '$'.
