@@ -4,7 +4,7 @@ Detect the user-defined identifiers in the text and convert them into HTML tags 
 
 # Online Demo
 
-<a href="https://stackblitz.com/edit/angular-ivy-sm7jjb?file=src%2Fapp%2Fcustom-pipe.pipe.ts" target='_blank'>CLICK HERE</a>
+<a href="https://stackblitz.com/edit/angular-ivy-rmtnjh?file=src%2Fapp%2Fcustom-pipe.pipe.ts" target='_blank'>CLICK HERE</a>
 
 # Supported browsers
 
@@ -159,3 +159,4 @@ For full example of custom pipe, see the live demo mention above.
 * The function does not supports double or multiple identifiers rather than double asterisks '**'.
 * Don't use same identifiers for multiple tags.
 * Some special characters can't be used as identifiers for example, dollar sign '$'.
+
