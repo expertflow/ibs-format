@@ -1,5 +1,5 @@
 function ibsFormat(value, arr, linky, escaping) {
-  originalArr = JSON.parse(JSON.stringify(arr));
+  const originalArr = JSON.parse(JSON.stringify(arr));
   let output = null;
   escaping = escaping && escaping.allowXssEscaping == false ? false : true;
   if (value) {
@@ -47,11 +47,11 @@ function ibsFormat(value, arr, linky, escaping) {
   if (output) {
     output = output.replace(/ <br> /g, "<br>");
   }
-  output = transformContentInsideEm(output);
+  output = transformContentInsideEm(output, originalArr);
   return output ? output.trim() : "";
 }
 
-function transformContentInsideEm(inputString) {
+function transformContentInsideEm(inputString, originalArr) {
   // Define the tag-to-replacement mapping as an array with 3 elements: [tag, symbol, priority]
  
   // Match the <em> tag and its content
